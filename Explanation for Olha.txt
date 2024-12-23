@@ -1,0 +1,53 @@
+Структура:
+
+- dice_persist - зберігати дані
+- d_system - логіка гри (gestion)
+- d_visual - інтерфейс + взаємодія користувача з ним
+- random_style - генерація випадкових кубів
+main.py - запуск всього проекту
+
+
+Dice persist:
+highscore_repo.py - логіка збереження даних
+
+d_system
+- components - класи з діаграми класів (highscore та entry не використовується)
+dice_system -  обробка тих класів
+
+d_visual
+- components - основні елементи для візуалізації
+ui - приєднання dice_system з компонентами (елементи для візуалізації)
+
+random_style - не зроблено
+
+--- Частина Саші ---
+Що мені треба імплементувати:
+1. Abstract Factory - поки що на цьому етапі. Папки проектів можуть називатися по іншому
+2. Singleton
+3. Composite
+4. Strategy
+
+
+
+--- ідеї 
+
+--- що буду робити я
+1. Abstract Factory 
+За прикладом на парі - щоб можна було зберігати в різних файлах - монгоДБ, sql, json
+
+- dice_persist
+
+---
+2. Singleton
+- dice_system / game_manager - 
+контролює стан гри, результати й налаштування, забезпечуючи єдину точку доступу до глобальних даних
+
+---
+3. Composite
+- dice-system / rules -- configuration settings 
+створити систему правил підрахунку балу
+
+---
+4. Strategy
+- dice-system / scoring_strategy
+створити алгоритм підрахунку правил
