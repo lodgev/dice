@@ -1,10 +1,11 @@
 import streamlit as st
 from .dice_view import display_dice
 
+
 def display_game(dice_system):
     """Відображає поточний стан гри."""
     
-    # Перевірка, чи гра завершена
+    # Перевірка завершення гри
     if dice_system.game_instance.is_game_over():
         st.write("Game over! No more rounds left.")
 
@@ -18,7 +19,6 @@ def display_game(dice_system):
 
         # Кнопка "Quit"
         if col2.button("Quit", key="quit_game"):
-            # Скидаємо всі стани гри
             st.session_state.clear()  # Очищає весь session_state
             st.experimental_rerun()  # Перезапускає сторінку
     else:
@@ -28,18 +28,16 @@ def display_game(dice_system):
             if isinstance(result, str):
                 st.write(result)  # Наприклад, "Game over! No more rounds left."
             else:
-                roll1, roll2, round_score, current_round = result
+                rolls, round_score, current_round = result
                 st.subheader(f"Round {current_round} Results:")
 
-                # Відображення кубиків у двох колонках
-                col1, col2 = st.columns(2)
-                display_dice(roll1, col1)
-                display_dice(roll2, col2)
+                # Відображення кубиків у динамічних колонках
+                columns = st.columns(len(rolls))
+                for roll, col in zip(rolls, columns):
+                    display_dice(roll, col)
 
                 # Відображення результатів
                 st.write(f"Score this round: {round_score}")
                 st.write(f"Total Score: {dice_system.get_total_score()}")
 
-    # Відображаємо номер гри
-    st.write(f"Game Number: {dice_system.get_game_number()}")
 

@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 
 class AbstractHighScore(ABC):
     @abstractmethod
-    def add_score(self, player_name, score,  date_obtained):
+    def add_score(self, player_name, score,  date_obtained, strategy_type):
         """Додає запис у базу даних."""
         pass
 

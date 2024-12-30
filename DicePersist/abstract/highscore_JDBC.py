@@ -10,23 +10,24 @@ class HighScoreJDBC(AbstractHighScore):
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 player_name TEXT,
                 score INTEGER,
-                date_obtained TEXT
+                date_obtained TEXT,
+                strategy_type TEXT
             )
         """)
         self.conn.commit()
-
-    def add_score(self, player_name, score, date_obtained):
+        
+    def add_score(self, player_name, score, date_obtained, strategy_type):
         """Додає запис у SQL базу даних."""
         self.cursor.execute(
-            "INSERT INTO highscores (player_name, score, date_obtained) VALUES (?, ?, ?)", 
-            (player_name, score, date_obtained)
+            "INSERT INTO highscores (player_name, score, date_obtained, strategy_type) VALUES (?, ?, ?, ?)",
+            (player_name, score, date_obtained, strategy_type)
         )
         self.conn.commit()
 
     def get_top_scores(self, limit=10):
         """Повертає топ-результати."""
         self.cursor.execute(
-            "SELECT player_name, score, date_obtained FROM highscores ORDER BY score DESC LIMIT ?",
+            "SELECT player_name, score, date_obtained, strategy_type FROM highscores ORDER BY score DESC LIMIT ?",
             (limit,)
         )
         return self.cursor.fetchall()

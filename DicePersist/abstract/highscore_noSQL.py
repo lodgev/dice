@@ -6,10 +6,17 @@ class HighScoreNoSQL(AbstractHighScore):
         self.client = MongoClient(db_url)
         self.db = self.client[db_name]
         self.collection = self.db[collection_name]
-
-    def add_score(self, player_name, score, date_obtained):
-        record = {"player_name": player_name, "score": score, "date_obtained": date_obtained}
-        self.collection.insert_one(record)
+        
+    def add_score(self, player_name, score, date_obtained, strategy_type):
+        """Додає результат у MongoDB."""
+        self.collection.insert_one({
+            "player_name": player_name,
+            "score": score,
+            "date_obtained": date_obtained,
+            "strategy_type": strategy_type
+        })
 
     def get_top_scores(self, limit=10):
-        return list(self.collection.find().sort("score", -1).limit(limit))
+        """Повертає топ-результати."""
+        results = self.collection.find().sort("score", -1).limit(limit)
+        return list(results)
