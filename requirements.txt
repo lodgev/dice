@@ -2,3 +2,4 @@ streamlit
 Pillow
 streamlit-3d
 mysql-connector-python
+pymongo

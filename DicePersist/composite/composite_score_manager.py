@@ -1,11 +1,47 @@
 from DicePersist.composite.score_component import ScoreComponent
 
 class CompositeScoreManager(ScoreComponent):
-    """Composite-клас для об'єднання кількох джерел даних."""
+    """Manages multiple persistence components with observer support."""
 
     def __init__(self):
         self.children = {}
         self.active_component = None
+        self.observers = []  # List of observers (UI, logs, etc.)
+
+    def add_observer(self, observer):
+        """Registers an observer."""
+        self.observers.append(observer)
+
+    def remove_observer(self, observer):
+        """Removes an observer."""
+        self.observers.remove(observer)
+
+    def notify_observers(self):
+        """Notifies all observers when high scores update."""
+        high_scores = self.get_scores()
+        for observer in self.observers:
+            observer.update(high_scores)
+
+#     def add_score(self, player_name, score, date_obtained, strategy_type):
+#         """Adds a score and notifies observers if it updates high scores."""
+#         if not self.active_component:
+#             raise ValueError("Active persistence component not set.")
+#         self.active_component.add_score(player_name, score, date_obtained, strategy_type)
+#         self.notify_observers()  # Notify observers after updating scores
+#
+#     def get_scores(self):
+#         """Retrieves all scores from all databases."""
+#         all_scores = []
+#         for child in self.children.values():
+#             all_scores.extend(child.get_scores())
+#         return sorted(all_scores, key=lambda x: x["score"], reverse=True)
+#
+# class CompositeScoreManager(ScoreComponent):
+#     """Composite-клас для об'єднання кількох джерел даних."""
+#
+#     def __init__(self):
+#         self.children = {}
+#         self.active_component = None
 
     def add(self, persistence_type, component):
         """Додає компонент у Composite."""
@@ -46,4 +82,35 @@ class CompositeScoreManager(ScoreComponent):
 
         # Сортування за рахунком
         return sorted(all_scores, key=lambda x: x["score"], reverse=True)
+
+
+    def __iter__(self):
+        """Returns an iterator for iterating over scores."""
+        return ScoreIterator(self.get_scores())
+
+
+
+class ScoreIterator:
+    """Iterator for iterating through multiple score components."""
+    def __init__(self, scores):
+        # Sorting scores in descending order
+        self._scores = sorted(scores, key=lambda x: x["score"], reverse=True)
+        self._index = 0
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self._index < len(self._scores):
+            score = self._scores[self._index]
+            self._index += 1
+            return score
+        else:
+            raise StopIteration
+
+class ScoreObserver:
+    """Interface for observing high score updates."""
+    def update(self, high_scores):
+        """This method will be called when high scores update."""
+        pass
 
