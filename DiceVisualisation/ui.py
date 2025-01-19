@@ -1,77 +1,12 @@
-# import streamlit as st
-# from DiceVisualisation.components.game_view import display_game
-# from DiceVisualisation.components.highscore_view import display_highscores
-# from DiceVisualisation.components.rules_view import display_rules
-# from DiceVisualisation.components.config_settings import configure_settings
-# from DiceSystem.dice_system import DiceSystem
-
-# def run_ui():
-#     # Ініціалізація DiceSystem через Singleton
-#     dice_system = DiceSystem()
-    
-#     st.sidebar.title("Menu")
-    
-#     # Вибір опції
-#     option = st.sidebar.selectbox("Choose an option", ["Play", "View scoreboard", "View rules", "Configure settings"])
-
-#     # Вибір типу сховища
-#     if "persistence_type" not in st.session_state:
-#         st.session_state["persistence_type"] = "nosql"  # Значення за замовчуванням
-
-#     persistence_type = st.sidebar.selectbox("Select Storage Type", ["nosql", "jdbc", "sr"])
-    
-#     # Якщо тип сховища змінився, оновлюємо тип у DiceSystem
-#     if st.session_state["persistence_type"] != persistence_type:
-#         st.session_state["persistence_type"] = persistence_type
-#         DiceSystem().switch_persistence(persistence_type)  # Викликаємо метод Singleton-класу
-
-#     # Вибір стратегії підрахунку очок
-#     if "scoring_strategy" not in st.session_state:
-#         st.session_state["scoring_strategy"] = "standard"  # Значення за замовчуванням
-
-#     strategy = st.sidebar.selectbox("Select Scoring Strategy", ["standard", "sum", "double"])
-
-#     # Якщо стратегія змінилася, оновлюємо її в DiceSystem
-#     if st.session_state["scoring_strategy"] != strategy:
-#         st.session_state["scoring_strategy"] = strategy
-#         dice_system.set_scoring_strategy(strategy)
-
-#     # Відображаємо поточну стратегію
-#     st.sidebar.write(f"Current Scoring Strategy: {strategy}")
-
-#     # Логіка для вибору меню
-#     if option == "Play":
-#         if "game_initialized" not in st.session_state:
-#             st.session_state["game_initialized"] = False
-
-#         if not st.session_state["game_initialized"]:
-#             player_name = st.text_input("Enter your name:")
-#             if st.button("Start Game"):
-#                 st.session_state["game_initialized"] = True
-#                 st.session_state["player_name"] = player_name
-#                 st.session_state["game_message"] = dice_system.start_game(player_name)
-
-#         if st.session_state["game_initialized"]:
-#             st.write(st.session_state["game_message"])
-#             display_game(dice_system)
-
-#     elif option == "View scoreboard":
-#         display_highscores(dice_system)
-    
-#     elif option == "View rules":
-#         display_rules()
-        
-#     elif option == "Configure settings":
-#         configure_settings()
 import streamlit as st
-# from DiceVisualisation.components.game_view import display_game
-from DiceVisualisation.components.game_view import GameView
 
+from components.game_view import GameView
+from components.highscore_view import display_highscores
+from components.rules_view import display_rules
+from components.config_settings import configure_settings
 
-from DiceVisualisation.components.highscore_view import display_highscores
-from DiceVisualisation.components.rules_view import display_rules
-from DiceVisualisation.components.config_settings import configure_settings
 from DiceSystem.dice_system import DiceSystem
+
 
 def add_custom_css():
     """Додає кастомні стилі через CSS."""
@@ -79,15 +14,6 @@ def add_custom_css():
         <style>
 
         /* Таблиці */
-    #    table {
-    #         border-collapse: collapse;
-    #         width: 100%;
-    #         margin: 20px 0;
-    #         font-size: 16px;
-    #         font-family: 'Arial', sans-serif;
-    #         color: #333333;
-    #     }
-
         th, td {
             border: 1px solid #ddd;
             padding: 12px 15px;
@@ -121,70 +47,6 @@ def add_custom_css():
 
         </style>
     """, unsafe_allow_html=True)
-
-# def run_ui():
-#     # Додавання кастомних стилів
-#     add_custom_css()
-#
-#     # Ініціалізація DiceSystem через Singleton
-#     dice_system = DiceSystem()
-#
-#     st.sidebar.title("Menu")
-#
-#     # Вибір опції
-#     option = st.sidebar.selectbox("Choose an option", ["Play", "View scoreboard", "View rules", "Configure settings"])
-#
-#     # Вибір типу сховища
-#     if "persistence_type" not in st.session_state:
-#         st.session_state["persistence_type"] = "nosql"  # Значення за замовчуванням
-#
-#     persistence_type = st.sidebar.selectbox("Select Storage Type", ["nosql", "jdbc", "sr"])
-#
-#     # Якщо тип сховища змінився, оновлюємо тип у DiceSystem
-#     if st.session_state["persistence_type"] != persistence_type:
-#         st.session_state["persistence_type"] = persistence_type
-#         DiceSystem().switch_persistence(persistence_type)  # Викликаємо метод Singleton-класу
-#
-#     # Вибір стратегії підрахунку очок
-#     if "scoring_strategy" not in st.session_state:
-#         st.session_state["scoring_strategy"] = "standard"  # Значення за замовчуванням
-#
-#     strategy = st.sidebar.selectbox("Select Scoring Strategy", ["standard", "sum", "double"])
-#
-#     # Якщо стратегія змінилася, оновлюємо її в DiceSystem
-#     if st.session_state["scoring_strategy"] != strategy:
-#         st.session_state["scoring_strategy"] = strategy
-#         dice_system.set_scoring_strategy(strategy)
-#
-#     # Відображаємо поточну стратегію
-#     st.sidebar.write(f"Current Scoring Strategy: {strategy}")
-#
-#     # Логіка для вибору меню
-#     if option == "Play":
-#         if "game_initialized" not in st.session_state:
-#             st.session_state["game_initialized"] = False
-#
-#         if not st.session_state["game_initialized"]:
-#             player_name = st.text_input("Enter your name:")
-#             if st.button("Start Game"):
-#                 st.session_state["game_initialized"] = True
-#                 st.session_state["player_name"] = player_name
-#                 st.session_state["game_message"] = dice_system.start_game(player_name)
-#
-#         if st.session_state["game_initialized"]:
-#             st.write(st.session_state["game_message"])
-#             display_game(dice_system)
-#
-#     elif option == "View scoreboard":
-#         display_highscores(dice_system)
-#
-#     elif option == "View rules":
-#         display_rules()
-#
-#     elif option == "Configure settings":
-#         configure_settings()
-
-
 
 def run_ui():
     # Add custom CSS

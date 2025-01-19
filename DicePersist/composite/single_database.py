@@ -1,4 +1,4 @@
-from DicePersist.composite.score_component import ScoreComponent
+from .score_component import ScoreComponent
 
 class SingleDatabase(ScoreComponent):
     """Компонент для роботи з однією базою даних."""

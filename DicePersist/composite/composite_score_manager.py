@@ -1,4 +1,4 @@
-from DicePersist.composite.score_component import ScoreComponent
+from .score_component import ScoreComponent
 
 class CompositeScoreManager(ScoreComponent):
     """Manages multiple persistence components with observer support."""
@@ -22,26 +22,6 @@ class CompositeScoreManager(ScoreComponent):
         for observer in self.observers:
             observer.update(high_scores)
 
-#     def add_score(self, player_name, score, date_obtained, strategy_type):
-#         """Adds a score and notifies observers if it updates high scores."""
-#         if not self.active_component:
-#             raise ValueError("Active persistence component not set.")
-#         self.active_component.add_score(player_name, score, date_obtained, strategy_type)
-#         self.notify_observers()  # Notify observers after updating scores
-#
-#     def get_scores(self):
-#         """Retrieves all scores from all databases."""
-#         all_scores = []
-#         for child in self.children.values():
-#             all_scores.extend(child.get_scores())
-#         return sorted(all_scores, key=lambda x: x["score"], reverse=True)
-#
-# class CompositeScoreManager(ScoreComponent):
-#     """Composite-клас для об'єднання кількох джерел даних."""
-#
-#     def __init__(self):
-#         self.children = {}
-#         self.active_component = None
 
     def add(self, persistence_type, component):
         """Додає компонент у Composite."""

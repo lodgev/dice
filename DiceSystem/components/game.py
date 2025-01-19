@@ -1,6 +1,6 @@
-from DiceSystem.components.composite_dice import CompositeDice
-from DiceSystem.components.scoring_strategy import StandardScoring
-from DiceSystem.components.single_dice import SingleDice  # Підключаємо стандартну стратегію
+from .composite_dice import CompositeDice
+from .scoring_strategy import StandardScoring
+from .single_dice import SingleDice 
 
 class GameObserver:
     """Interface for observers that listen to game state changes."""

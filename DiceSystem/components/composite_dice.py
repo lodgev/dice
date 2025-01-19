@@ -1,5 +1,5 @@
 # from .dice_component import DiceComponent
-from DiceSystem.components.dice_component import DiceComponent
+from .dice_component import DiceComponent
 
 
 class CompositeDice(DiceComponent):

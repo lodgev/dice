@@ -1,4 +1,9 @@
-from DiceSystem.components.game import Game
+import sys
+import os
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from components.game import Game
 from datetime import datetime
 
 # Design Pattern:  Abstract Factory
@@ -12,7 +17,7 @@ from DicePersist.composite.single_database import SingleDatabase
 from DicePersist.composite.composite_score_manager import CompositeScoreManager
 
 # Design Pattern: Strategy
-from DiceSystem.components.scoring_strategy import StandardScoring, SumScoring, DoubleScoring
+from components.scoring_strategy import StandardScoring, SumScoring, DoubleScoring
 
 # Design Pattern: Singleton
 class SingletonMeta(type):
