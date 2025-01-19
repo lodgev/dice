@@ -7,20 +7,18 @@ class HighScoreSr(AbstractHighScore):
         self.file_path = file_path
 
     def add_score(self, player_name, score, date_obtained, strategy_type):
-        """Додає запис у CSV."""
         with open(self.file_path, mode="a", newline="") as file:
             writer = csv.writer(file)
             writer.writerow([player_name, score, date_obtained, strategy_type])
 
     def get_top_scores(self, limit=10):
-        """Повертає топ-результати."""
         try:
             with open(self.file_path, mode="r", newline="") as file:
                 reader = csv.reader(file)
-                next(reader, None)  # Пропускаємо заголовки (перший рядок)
+                next(reader, None)  
                 scores = sorted(
                     reader,
-                    key=lambda x: int(x[1]),  # Перетворюємо другий елемент на число
+                    key=lambda x: int(x[1]), 
                     reverse=True
                 )
                 return scores[:limit]

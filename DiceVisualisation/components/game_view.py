@@ -4,17 +4,14 @@ from .dice_view import display_dice
 from DiceSystem.components.game import GameObserver
 
 class GameView(GameObserver):
-    """Streamlit-based view for displaying the game state."""
     def __init__(self):
         self.latest_game_state = None
 
     def update(self, game_state):
-        """Update the view when the game state changes."""
         self.latest_game_state = game_state
         self.display_game_state()
 
     def display_game_state(self):
-        """Display the updated game state."""
         game_state = self.latest_game_state
         if game_state:
             st.write(f"Player: {game_state['player_name']}")
@@ -22,7 +19,6 @@ class GameView(GameObserver):
             st.write(f"Total Score: {game_state['total_score']}")
 
     def display_game(self, dice_system):
-        """Display the game UI and handle user actions."""
         if dice_system.game_instance.is_game_over():
             st.write("Game over! No more rounds left.")
 

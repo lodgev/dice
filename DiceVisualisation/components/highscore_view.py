@@ -13,7 +13,6 @@ def display_highscores(dice_system):
             "double": "DoubleScoring"
         }[strategy]
 
-    # Get top scores
     top_scores = dice_system.get_combined_top_scores(strategy_type=strategy_type)
 
     if not top_scores:

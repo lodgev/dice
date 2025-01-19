@@ -9,7 +9,6 @@ from DiceSystem.dice_system import DiceSystem
 
 
 def add_custom_css():
-    """Додає кастомні стилі через CSS."""
     st.markdown("""
         <style>
 
@@ -49,45 +48,36 @@ def add_custom_css():
     """, unsafe_allow_html=True)
 
 def run_ui():
-    # Add custom CSS
     add_custom_css()
 
-    # Initialize DiceSystem through Singleton
     dice_system = DiceSystem()
 
     game_view = GameView()
 
     st.sidebar.title("Menu")
 
-    # Select menu option
     option = st.sidebar.selectbox("Choose an option", ["Play", "View scoreboard", "View rules", "Configure settings"])
 
-    # Select storage type
     if "persistence_type" not in st.session_state:
         st.session_state["persistence_type"] = "nosql"  # Default value
 
     persistence_type = st.sidebar.selectbox("Select Storage Type", ["nosql", "jdbc", "sr"])
 
-    # Update persistence type in DiceSystem
     if st.session_state["persistence_type"] != persistence_type:
         st.session_state["persistence_type"] = persistence_type
         dice_system.switch_persistence(persistence_type)
 
-    # Select scoring strategy
     if "scoring_strategy" not in st.session_state:
         st.session_state["scoring_strategy"] = "standard"  # Default value
 
     strategy = st.sidebar.selectbox("Select Scoring Strategy", ["standard", "sum", "double"])
 
-    # Update scoring strategy in DiceSystem
     if st.session_state["scoring_strategy"] != strategy:
         st.session_state["scoring_strategy"] = strategy
         dice_system.set_scoring_strategy(strategy)
 
-    # Display current strategy
     st.sidebar.write(f"Current Scoring Strategy: {strategy}")
 
-    # Menu logic
     if option == "Play":
         if "game_initialized" not in st.session_state:
             st.session_state["game_initialized"] = False

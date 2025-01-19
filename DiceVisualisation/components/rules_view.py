@@ -2,10 +2,8 @@ import streamlit as st
 
 
 def display_rules():
-    """Відображає правила гри з вкладками для стратегій."""
     st.title("Game Rules")
 
-    # Вкладки для різних стратегій
     tabs = st.tabs(["General Rules", "Standard Strategy", "Sum Strategy", "Double Strategy"])
 
     with tabs[0]:

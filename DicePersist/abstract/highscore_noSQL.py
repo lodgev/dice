@@ -8,7 +8,6 @@ class HighScoreNoSQL(AbstractHighScore):
         self.collection = self.db[collection_name]
         
     def add_score(self, player_name, score, date_obtained, strategy_type):
-        """Додає результат у MongoDB."""
         self.collection.insert_one({
             "player_name": player_name,
             "score": score,
@@ -17,6 +16,5 @@ class HighScoreNoSQL(AbstractHighScore):
         })
 
     def get_top_scores(self, limit=10):
-        """Повертає топ-результати."""
         results = self.collection.find().sort("score", -1).limit(limit)
         return list(results)

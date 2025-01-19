@@ -4,7 +4,6 @@ from PIL import Image
 
 
 def display_dice(dice_value, container):
-    """Відображає кубик із відповідним значенням."""
     image_path = f"./DiceVisualisation/assets/standard/dice_{dice_value}.png"
     try:
         img = Image.open(image_path)
